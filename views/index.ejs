@@ -1,0 +1,43 @@
+<%- include('partials/header.ejs') %>
+
+<div class="welcome">
+<h1>Welcome to my Blog Site</h1>
+<form action="/addNew" class="add-new" method="post">
+    <input type="submit" class="btn  btn-dark" value="Add New">
+</form>
+</div>
+
+<% if(locals.isForm){ %>
+<form action="/submit" method="post">
+    <!-- <label for="author"></label>
+    <input type="text" name="author" class="form-control" id="author" placeholder="author"> -->
+    <label for="title"></label>
+    <input type="text" name="title" value="<%= updateBlog ? updateBlog.title : '' %>" class="form-control" id="title" placeholder="Title">
+    <label for="content"></label>
+    <textarea name="content" id="textarea" class="content form-control" placeholder="Content"><%= updateBlog ? updateBlog.content : '' %></textarea>
+    <input type="submit" class="btn blog-btn btn-dark" value="Blog">
+</form>
+<% } %>
+
+<% if(locals.blogLength !== 0){%>
+<div class="blog-wrapper">
+    <% for(var i = 0; i < locals.blogLength; i++){ %>
+    <div class="blog-item">
+        <h3 class="blog-title"><%= blog[i].title %></h3>
+        <p class="blog-content"><%= blog[i].content %></p>
+        <form action="/delete/<%= blog[i].id %>?_method=DELETE" class="blog-handlers" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <button type="submit" class="btn btn-dark">Delete</button>
+        </form>
+        <form action="/update/<%= blog[i].id %>?_method=PATCH" class="blog-handlers" method="post">
+            <input type="hidden" name="_method" class="btn btn-dark" value="PATCH">
+            <button type="submit" class="btn btn-dark">Update</button>
+        </form>
+    </div>
+    <% } %>
+</div>
+<% } %>
+
+
+
+<%- include('partials/footer.ejs') %>
