@@ -17,7 +17,7 @@ app.use(express.static('public'))
 app.use(methodOverride('_method'))
 
 app.get('/',(req,res)=>{
-        res.render(__dirname + 'index.ejs',{
+        res.render(__dirname + '/views/index.ejs',{
             blogLength:blog.length,
             blog:blog,
             isForm,
